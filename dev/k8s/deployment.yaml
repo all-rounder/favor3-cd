@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: favor3
+  namespace: favor3-dev
+  labels:
+    app: favor3
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: favor3
+  template:
+    metadata:
+      labels:
+        app: favor3
+    spec:
+      containers:
+        - name: favor3
+          image: ghcr.io/all-rounder/favor3/app:latest # CI will overwrite tag
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          env:
+            - name: NODE_ENV
+              value: "development"
