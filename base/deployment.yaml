@@ -17,3 +17,5 @@ spec:
           image: app # <-- placeholder, replaced by kustomize edit set image
           ports:
             - containerPort: 3000
+      imagePullSecrets:
+        - name: ghcr-secret
