@@ -2,19 +2,30 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- ../../base
+  - ../../base
 
 images:
-- name: app
-  newName: ghcr.io/all-rounder/favor3/app
-  newTag: 2cf124c633f1b98fcf2f1620faa8670ea1512609
+  - name: app
+    newName: ghcr.io/all-rounder/favor3/app
+    newTag: 2cf124c633f1b98fcf2f1620faa8670ea1512609
+
+secretGenerator:
+  - name: ghcr-secret
+    envs:
+      - ghcr-secret.env
+  - name: db-secret
+    envs:
+      - db-secret.env
+
+generatorOptions:
+  disableNameSuffixHash: true
 
 # environment-specific patches (optional)
 patchesStrategicMerge:
-- |-
-  apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: favor3
-  spec:
-    replicas: 1
+  - |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: favor3
+    spec:
+      replicas: 1
