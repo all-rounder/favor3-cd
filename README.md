@@ -27,3 +27,18 @@ argocd login localhost:8080 --username admin --password <your-password>
 argocd login localhost:8080 --username admin --password <your-password> --insecure
 
 ```
+
+# Kubernetes secrets
+
+```
+kubectl create secret docker-registry ghcr-secret \
+  --docker-server=ghcr.io \
+  --docker-username=all-rounder \
+  --docker-password=<your-github-token> \
+  --docker-email=<your-email> \
+  -n favor3-dev
+
+kubectl create secret generic db-secret \
+  --from-literal=DATABASE_URL="postgres://<user>:<password>@<host>.neon.tech/<dbname>?sslmode=require" \
+  -n favor3-dev
+```
