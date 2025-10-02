@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: favor3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: favor3
+  template:
+    metadata:
+      labels:
+        app: favor3
+    spec:
+      containers:
+        - name: favor3
+          image: app # <-- placeholder, replaced by kustomize edit set image
+          ports:
+            - containerPort: 3000

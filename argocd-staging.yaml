@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/all-rounder/favor3-staging-cd-repo"
+    repoURL: "https://github.com/all-rounder/favor3-cd"
     targetRevision: main
-    path: k8s
+    path: overlays/staging
   destination:
     server: "https://kubernetes.default.svc"
     namespace: favor3-staging

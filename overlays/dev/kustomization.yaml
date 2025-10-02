@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+images:
+  - name: app
+    newName: ghcr.io/all-rounder/favor3/app
+    newTag: dev-latest
+
+# environment-specific patches (optional)
+patchesStrategicMerge:
+  - |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: favor3
+    spec:
+      replicas: 1

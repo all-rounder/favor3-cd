@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: favor3-dev
+  name: favor3-prod
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: "https://github.com/all-rounder/favor3-dev-cd-repo"
+    repoURL: "https://github.com/all-rounder/favor3-cd"
     targetRevision: main
-    path: k8s
+    path: overlays/prod
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: favor3-dev
+    namespace: favor3-prod
   syncPolicy:
     automated:
       prune: true
