@@ -30,7 +30,14 @@ argocd login localhost:8080 --username admin --password <your-password> --insecu
 
 # Kubernetes secrets
 
+
+## Mannually
+
 ```
+# Enterprise or large projects, GitOps may use SOPS to create secrets
+
+# docker-registry secrets are usually created manually
+
 kubectl create secret docker-registry ghcr-secret \
   --docker-server=ghcr.io \
   --docker-username=all-rounder \
@@ -38,7 +45,32 @@ kubectl create secret docker-registry ghcr-secret \
   --docker-email=<your-email> \
   -n favor3-dev
 
+# Generic secrets could be created with External Secrects Operator
+
+# Generic secrets are created manually
+
 kubectl create secret generic db-secret \
   --from-literal=DATABASE_URL="postgres://<user>:<password>@<host>.neon.tech/<dbname>?sslmode=require" \
   -n favor3-dev
 ```
+
+## ESO
+
+- cluster-secret-store.yaml
+- external-secret-db.yaml
+- external-secret-ghcr-env.yaml
+
+```
+eksctl create iamserviceaccount \
+  --name favor3-eso \
+  --namespace favor3-dev \
+  --cluster <your-cluster-name> \
+  --attach-policy-arn arn:aws:iam::aws:policy/SecretsManagerReadWrite \
+  --approve \
+  --override-existing-serviceaccounts
+
+aws secretsmanager create-secret --name favor3-dev-db-url --secret-string "<Neon DB URL>"
+aws secretsmanager create-secret --name favor3-dev-ghcr-pat --secret-string "<GHCR PAT>"
+```
+
+## SOPS

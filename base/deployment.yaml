@@ -23,5 +23,10 @@ spec:
                 secretKeyRef:
                   name: db-secret # must match the Secret name
                   key: DATABASE_URL # must match the key in your Secret
+            - name: GHCR_PAT
+              valueFrom:
+                secretKeyRef:
+                  name: ghcr-env-secret
+                  key: GHCR_PAT
       imagePullSecrets:
         - name: ghcr-secret
